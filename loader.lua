@@ -12,6 +12,9 @@ local BUST = "?v=" .. tostring(os.time())
 
 local function fetch(url)
     local ok, body = pcall(function() return game:HttpGet(url, true) end)
+    if not (ok and type(body) == "string" and #body > 100) then
+        ok, body = pcall(function() return game:HttpGet(url) end)
+    end
     if ok and type(body) == "string" and #body > 100 then
         return body
     end
